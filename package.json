@@ -1,0 +1,24 @@
+{
+  "name": "todo-list-major-project",
+  "version": "1.0.0",
+  "description": "My todo list web app for submitting as a major project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "commits": "git log --all --graph --decorate --oneline",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SugarCubE3643/Todo-List-Major-Project.git"
+  },
+  "author": "Vinayak Sahu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SugarCubE3643/Todo-List-Major-Project/issues"
+  },
+  "homepage": "https://github.com/SugarCubE3643/Todo-List-Major-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
