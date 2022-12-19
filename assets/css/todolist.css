@@ -1,0 +1,316 @@
+/* Google API Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+
+/* CSS variables */
+:root{
+    --background-main: #121212;
+    --background-container: rgba(255,255,255,0.05);
+    --background-container-secondary: rgba(255,255,255,0.02);
+    --background-container-blend: #1e1e1e;
+    --background-heading: rgba(255,255,255,0.07);
+    --shadow-main: rgba(0,0,0,0.7);
+    --font-color-1:#e5e5e5;
+    --font-color-2:#616161;
+    --font-color-3:#000000;
+    --input-enabled: #4e4e4e;
+    --primary: #bb86fc;
+    --secondary: #03dac6;
+
+    /* Category colors */
+    --personal:#86a9fc;
+    --work:#9e86fc;
+    --school:#fc86d1;
+    --cleaning:#fcb586;
+    --errands:#e4fc86;
+    --others:#86fcfa;
+}
+
+/* Changing HTML default styles */
+html{
+    box-sizing: border-box;
+    height: 100%;
+}
+
+@media screen and (max-width: 700px) {
+    :root{
+        font-size: 12px;
+    }
+}
+
+/* Some reasonable resets */
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+
+    /* Setting the font family for all elements */
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Removing default list styles */
+li {
+    list-style: none;
+}
+
+/* Body properties */
+body{
+    background: var(--background-main);
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* To Do List Container */
+.container{
+    border-radius: 10px;
+    background: var(--background-container);
+    box-shadow: 0 15px 25px var(--shadow-main);
+
+    min-width: min(760px, 92vw);
+    width: 64vw;
+    max-width: 900px;
+
+    min-height: 60vh;
+}
+
+/* Styling different sections in the container */
+
+/* Styles for heading section of the app */
+.heading{
+    /* Font styles */
+    color: var(--font-color-1);
+    text-align: center;
+    line-height: 5rem;
+    font-size: 3.2rem;
+    font-weight: 600;
+
+    border-radius: 10px;
+    margin: 12px;
+    background: var(--background-heading);
+    box-shadow: 0 0 20px var(--shadow-main);
+}
+
+/* Add Task Form Section styles */
+.addTaskForm form{
+    border: none;
+    background: transparent;
+    color: var(--font-color-1);
+
+    /* Setting up the components as grid */
+    display: grid;
+    gap:1rem;
+    margin-top: 2rem;
+    grid-auto-rows: min(10vh, 6rem);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "description description"
+        "dueDate category"
+        "addTask deleteTasks"
+    ;
+}
+
+.descriptionContainer{
+    grid-area: description;
+}
+.dueDateContainer{
+    grid-area: dueDate;
+}
+
+.dueDateContainer input[type="date"]{
+    cursor: text;
+}
+
+/* Styling the calendar picker separately */
+.dueDateContainer input[type="date"]::-webkit-calendar-picker-indicator{
+    /* color: var(--font-color-2); */
+    /* Used a filter instead of color to get the required color */
+    filter: invert(36%) sepia(0%) saturate(0%) hue-rotate(155deg) brightness(102%) contrast(88%);
+    padding-right: 1rem;
+    cursor: pointer;
+}
+
+/* Changing color of calendar picker when input is focused */
+.dueDateContainer input[type="date"]:focus::-webkit-calendar-picker-indicator{
+    /* color: var(--font-color-1); */
+    /* Used a filter instead of color to get the required color */
+    filter: invert(98%) sepia(1%) saturate(1032%) hue-rotate(211deg) brightness(115%) contrast(80%);
+}
+
+.categoryContainer{
+    grid-area: category;
+}
+
+/* Common styles for description, dueDate and category */
+.descriptionContainer, .dueDateContainer, .categoryContainer{
+    width: 100%;
+    position: relative;
+    padding: 1rem 0.8rem;
+}
+
+/* Common styles for all input in form */
+.addTaskForm form input{
+    color: var(--font-color-2);
+    font-size: 1.2rem;
+    padding-left: 1rem;
+    
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid var(--input-enabled);
+}
+
+/* placeholder for description and category and just focus for date input as placeholder doesn't take color */
+.addTaskForm form input:focus::placeholder, .addTaskForm form input:focus{
+    color: var(--font-color-1);
+}
+
+/* Common styles for all labels in form */
+.addTaskForm form label{
+    position: absolute;
+    padding: 0 1rem;
+    top: 0;
+    left: 3rem;
+    font-size: 1.6rem;
+    background: var(--background-container-blend);
+
+}
+/* Styling the add task and delete tasks buttons */
+#addTask{
+    grid-area: addTask;
+    background: var(--primary);
+    justify-self: right;
+}
+#deleteTasks{
+    grid-area: deleteTasks;
+    background: var(--secondary);
+    justify-self: left;
+}
+
+#addTask, #deleteTasks{
+    color: var(--font-color-3);
+    font-weight: 500;
+    height: 60%;
+    width: 50%;
+    padding: 0;
+    transition: opacity 120ms ease-in-out, transform 120ms ease-in-out;
+}
+
+#addTask:hover, #deleteTasks:hover{
+    opacity: 0.9;
+}
+
+#addTask:active, #deleteTasks:active{
+    transform: scale(0.9);
+}
+
+/* tasklist section styles */
+.taskList{    
+    border-radius: 10px;
+    background: var(--background-container-secondary);
+    box-shadow: 0 0px 20px var(--shadow-main);
+    padding: 1rem;
+    margin: 1rem;
+}
+/* Styling the list items */
+.taskList li{
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--font-color-1);
+}
+
+/* Styling the checkbox in list item */
+.taskList li input[type="checkbox"]{
+    appearance:none;
+    
+    /* Setting dimensions */
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 4px;
+    border: 2px solid var(--background-container);
+
+    display: grid;
+    place-content: center;
+}
+
+/* Resetting and making a new custom check mark */
+.taskList li input[type="checkbox"]::before{
+    content: "";
+    height: 0.8rem;
+    width: 0.8rem;
+
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transition: transform 110ms ease-in-out;
+
+    background-color: var(--primary);
+}
+
+/* Transition to scale 1 when the chekcbox is chekced */
+.taskList li input[type="checkbox"]:checked::before{
+    transform: scale(1);
+}
+
+/* Styling task details and category when checkbox is checked */
+.taskList li:has(>input[type="checkbox"]:checked) > .taskDetails{
+    text-decoration: line-through;
+    color: var(--font-color-2);
+}
+
+.taskList li:has(>input[type="checkbox"]:checked) > .category{
+    opacity: 0.4;
+}
+
+/* common styles for all task details */
+.taskList .taskDetails{
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Setting up different font sizes for description of task and due date */
+.taskList .taskDetails .description{
+    font-size: 1.2rem;
+}
+
+.taskList .taskDetails .dueDate{
+    font-size: 0.8rem;
+}
+
+/* Category common styles */
+.taskList .category{
+    margin-left: auto;
+    border-radius: 10px;
+    text-align: center;
+    padding: 0 1em;
+    line-height: 2rem;
+    width: 6rem;
+    color: var(--font-color-3);
+}
+
+/* Giving background color to category based on what category is choosed */
+.taskList .category.Personal{
+    background-color: var(--personal);
+}
+.taskList .category.Work{
+    background-color: var(--work);
+}
+.taskList .category.School{
+    background-color: var(--school);
+}
+.taskList .category.Cleaning{
+    background-color: var(--cleaning);
+}
+.taskList .category.Errands{
+    background-color: var(--errands);
+}
+.taskList .category.Others{
+    background-color: var(--others);
+}

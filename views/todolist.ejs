@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    
+    <!-- Google API Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/todolist.css">
+</head>
+
+<body>
+    <!-- App container -->
+    <div class="container">
+
+        <!-- Heading section -->
+        <section class="heading">
+            TO DO LIST
+        </section>
+
+        <!-- Form for adding a new task -->
+        <section class="addTaskForm">
+
+            <!-- Setting method of form to POST -->
+            <form method="POST">
+
+                <!-- Container for the task description input -->
+                <div class="descriptionContainer">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" autocomplete="off" placeholder="Enter new task here">
+                </div>
+
+                <!-- Container for the due date input -->
+                <div class="dueDateContainer">
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" name="dueDate">
+                </div>
+
+                <!-- Container for the category selection input -->
+                <div class="categoryContainer">
+                    <label for="category">Category</label>
+                    <input list="categories" id="category" name="category" placeholder="Select Category">
+    
+                    <datalist id="categories">
+
+                        <!-- Getting the categories from the task schema -->
+                        <% for(let category of categoryValues) { %>
+                            <option value="<%= category %>"></option>                            
+                        <% } %>
+                    </datalist>
+                </div>
+
+                <!-- Using formaction attribute instead of using action attribute in form -->
+                <!-- Add Task input -->
+                <input id="addTask" type="submit" formaction="create-task" value="Add Task">
+
+                <!-- Delete completed tasks input -->
+                <input id="deleteTasks" type="submit" formaction="delete-completed-task" value="Delete Tasks">
+            </form>
+        </section>
+
+        <!-- List of tasks section -->
+        <section class="taskList">
+            <ul>
+                <!-- Getting the list of tasks from the controller and iterating over it to add tasks to DOM -->
+                <% for(let task of taskList) { %>
+                    <li>
+                        <input type="checkbox" onclick='window.location.assign("/toggle-task/?id=<%= task._id %>")' <%= task.done ? "checked":"" %>>
+
+                        <!-- Putting description and due date inside a container for proper arrangement -->
+                        <div class="taskDetails">
+                            <span class="description">
+                                <%= task.description %>
+                            </span>
+    
+                            <!-- Using a schema method to convert the format of date -->
+                            <span class="dueDate">
+                                Due: 
+                                <%= task.formatDate('dueDate') %>
+                            </span> 
+                        </div>
+                                               
+                        <span class="category <%= task.category %>">
+                            <%= task.category %>
+                        </span>
+                    </li>
+                <% } %>
+            </ul>
+        </section>
+    </div>
+
+    <script src="/js/todolist.js"></script>
+</body>
+
+</html>
