@@ -3,37 +3,39 @@
 
 
 /* CSS variables */
-:root{
+:root {
     --background-main: #121212;
-    --background-container: rgba(255,255,255,0.05);
-    --background-container-secondary: rgba(255,255,255,0.02);
+    --background-container: rgba(255, 255, 255, 0.05);
+    --background-container-secondary: rgba(255, 255, 255, 0.02);
     --background-container-blend: #1e1e1e;
-    --background-heading: rgba(255,255,255,0.07);
-    --shadow-main: rgba(0,0,0,0.7);
-    --font-color-1:#e5e5e5;
-    --font-color-2:#616161;
-    --font-color-3:#000000;
+    --background-heading: rgba(255, 255, 255, 0.07);
+    --shadow-main: rgba(0, 0, 0, 0.7);
+    --font-color-1: #e5e5e5;
+    --font-color-2: #616161;
+    --font-color-3: #000000;
     --input-enabled: #4e4e4e;
     --primary: #bb86fc;
     --secondary: #03dac6;
 
     /* Category colors */
-    --personal:#86a9fc;
-    --work:#9e86fc;
-    --school:#fc86d1;
-    --cleaning:#fcb586;
-    --errands:#e4fc86;
-    --others:#86fcfa;
+    --personal: #86a9fc;
+    --work: #9e86fc;
+    --school: #fc86d1;
+    --cleaning: #fcb586;
+    --errands: #e4fc86;
+    --others: #86fcfa;
 }
 
 /* Changing HTML default styles */
-html{
+html {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
 }
 
+/* Changing the root em value for screens with width less than 700px */
 @media screen and (max-width: 700px) {
-    :root{
+    :root {
         font-size: 12px;
     }
 }
@@ -42,6 +44,7 @@ html{
 *,
 *::before,
 *::after {
+    -webkit-box-sizing: inherit;
     box-sizing: inherit;
     margin: 0;
     padding: 0;
@@ -56,18 +59,25 @@ li {
 }
 
 /* Body properties */
-body{
+body {
     background: var(--background-main);
     height: inherit;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
 /* To Do List Container */
-.container{
+.container {
     border-radius: 10px;
     background: var(--background-container);
+    -webkit-box-shadow: 0 15px 25px var(--shadow-main);
     box-shadow: 0 15px 25px var(--shadow-main);
 
     min-width: min(760px, 92vw);
@@ -80,7 +90,7 @@ body{
 /* Styling different sections in the container */
 
 /* Styles for heading section of the app */
-.heading{
+.heading {
     /* Font styles */
     color: var(--font-color-1);
     text-align: center;
@@ -91,72 +101,88 @@ body{
     border-radius: 10px;
     margin: 12px;
     background: var(--background-heading);
+    -webkit-box-shadow: 0 0 20px var(--shadow-main);
     box-shadow: 0 0 20px var(--shadow-main);
 }
 
 /* Add Task Form Section styles */
-.addTaskForm form{
+.addTaskForm form {
     border: none;
     background: transparent;
     color: var(--font-color-1);
 
     /* Setting up the components as grid */
+    display: -ms-grid;
     display: grid;
-    gap:1rem;
+    gap: 1rem;
     margin-top: 2rem;
     grid-auto-rows: min(10vh, 6rem);
+    -ms-grid-columns: 1fr 1rem 1fr;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
+    -ms-grid-rows: auto 1rem auto 1rem auto;
+    grid-template-areas:
         "description description"
         "dueDate category"
         "addTask deleteTasks"
     ;
 }
 
-.descriptionContainer{
+.descriptionContainer {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
     grid-area: description;
 }
-.dueDateContainer{
+
+.dueDateContainer {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
     grid-area: dueDate;
 }
 
-.dueDateContainer input[type="date"]{
+.dueDateContainer input[type="date"] {
     cursor: text;
 }
 
 /* Styling the calendar picker separately */
-.dueDateContainer input[type="date"]::-webkit-calendar-picker-indicator{
+.dueDateContainer input[type="date"]::-webkit-calendar-picker-indicator {
     /* color: var(--font-color-2); */
     /* Used a filter instead of color to get the required color */
+    -webkit-filter: invert(36%) sepia(0%) saturate(0%) hue-rotate(155deg) brightness(102%) contrast(88%);
     filter: invert(36%) sepia(0%) saturate(0%) hue-rotate(155deg) brightness(102%) contrast(88%);
     padding-right: 1rem;
     cursor: pointer;
 }
 
 /* Changing color of calendar picker when input is focused */
-.dueDateContainer input[type="date"]:focus::-webkit-calendar-picker-indicator{
+.dueDateContainer input[type="date"]:focus::-webkit-calendar-picker-indicator {
     /* color: var(--font-color-1); */
     /* Used a filter instead of color to get the required color */
+    -webkit-filter: invert(98%) sepia(1%) saturate(1032%) hue-rotate(211deg) brightness(115%) contrast(80%);
     filter: invert(98%) sepia(1%) saturate(1032%) hue-rotate(211deg) brightness(115%) contrast(80%);
 }
 
-.categoryContainer{
+.categoryContainer {
+    -ms-grid-row: 3;
+    -ms-grid-column: 3;
     grid-area: category;
 }
 
 /* Common styles for description, dueDate and category */
-.descriptionContainer, .dueDateContainer, .categoryContainer{
+.descriptionContainer,
+.dueDateContainer,
+.categoryContainer {
     width: 100%;
     position: relative;
     padding: 1rem 0.8rem;
 }
 
 /* Common styles for all input in form */
-.addTaskForm form input{
+.addTaskForm form input {
     color: var(--font-color-2);
     font-size: 1.2rem;
     padding-left: 1rem;
-    
+
     width: 100%;
     height: 100%;
 
@@ -166,12 +192,29 @@ body{
 }
 
 /* placeholder for description and category and just focus for date input as placeholder doesn't take color */
-.addTaskForm form input:focus::placeholder, .addTaskForm form input:focus{
+.addTaskForm form input:focus::-webkit-input-placeholder {
+    color: var(--font-color-1);
+}
+
+.addTaskForm form input:focus::-moz-placeholder {
+    color: var(--font-color-1);
+}
+
+.addTaskForm form input:focus:-ms-input-placeholder {
+    color: var(--font-color-1);
+}
+
+.addTaskForm form input:focus::-ms-input-placeholder {
+    color: var(--font-color-1);
+}
+
+.addTaskForm form input:focus::placeholder,
+.addTaskForm form input:focus {
     color: var(--font-color-1);
 }
 
 /* Common styles for all labels in form */
-.addTaskForm form label{
+.addTaskForm form label {
     position: absolute;
     padding: 0 1rem;
     top: 0;
@@ -180,112 +223,152 @@ body{
     background: var(--background-container-blend);
 
 }
+
 /* Styling the add task and delete tasks buttons */
-#addTask{
+#addTask {
+    -ms-grid-row: 5;
+    -ms-grid-column: 1;
     grid-area: addTask;
     background: var(--primary);
+    -ms-grid-column-align: right;
     justify-self: right;
 }
-#deleteTasks{
+
+#deleteTasks {
+    -ms-grid-row: 5;
+    -ms-grid-column: 3;
     grid-area: deleteTasks;
     background: var(--secondary);
+    -ms-grid-column-align: left;
     justify-self: left;
 }
 
-#addTask, #deleteTasks{
+#addTask,
+#deleteTasks {
     color: var(--font-color-3);
     font-weight: 500;
     height: 60%;
     width: 50%;
     padding: 0;
+    -webkit-transition: opacity 120ms ease-in-out, -webkit-transform 120ms ease-in-out;
+    transition: opacity 120ms ease-in-out, -webkit-transform 120ms ease-in-out;
     transition: opacity 120ms ease-in-out, transform 120ms ease-in-out;
+    transition: opacity 120ms ease-in-out, transform 120ms ease-in-out, -webkit-transform 120ms ease-in-out;
 }
 
-#addTask:hover, #deleteTasks:hover{
+#addTask:hover,
+#deleteTasks:hover {
     opacity: 0.9;
 }
 
-#addTask:active, #deleteTasks:active{
+#addTask:active,
+#deleteTasks:active {
+    -webkit-transform: scale(0.9);
     transform: scale(0.9);
 }
 
 /* tasklist section styles */
-.taskList{    
+.taskList {
     border-radius: 10px;
     background: var(--background-container-secondary);
+    -webkit-box-shadow: 0 0px 20px var(--shadow-main);
     box-shadow: 0 0px 20px var(--shadow-main);
     padding: 1rem;
     margin: 1rem;
 }
+
 /* Styling the list items */
-.taskList li{
+.taskList li {
     margin: 1rem 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     color: var(--font-color-1);
 }
 
 /* Styling the checkbox in list item */
-.taskList li input[type="checkbox"]{
-    appearance:none;
-    
+.taskList li input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
     /* Setting dimensions */
     width: 1.4rem;
     height: 1.4rem;
     border-radius: 4px;
     border: 2px solid var(--background-container);
 
+    display: -ms-grid;
+
     display: grid;
     place-content: center;
 }
 
 /* Resetting and making a new custom check mark */
-.taskList li input[type="checkbox"]::before{
+.taskList li input[type="checkbox"]::before {
     content: "";
     height: 0.8rem;
     width: 0.8rem;
 
+    -webkit-clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    -webkit-transform: scale(0);
     transform: scale(0);
+    -webkit-transition: -webkit-transform 110ms ease-in-out;
+    transition: -webkit-transform 110ms ease-in-out;
     transition: transform 110ms ease-in-out;
+    transition: transform 110ms ease-in-out, -webkit-transform 110ms ease-in-out;
 
     background-color: var(--primary);
 }
 
 /* Transition to scale 1 when the chekcbox is chekced */
-.taskList li input[type="checkbox"]:checked::before{
+.taskList li input[type="checkbox"]:checked::before {
+    -webkit-transform: scale(1);
     transform: scale(1);
 }
 
 /* Styling task details and category when checkbox is checked */
-.taskList li:has(>input[type="checkbox"]:checked) > .taskDetails{
+.taskList li:has(>input[type="checkbox"]:checked)>.taskDetails {
     text-decoration: line-through;
     color: var(--font-color-2);
 }
 
-.taskList li:has(>input[type="checkbox"]:checked) > .category{
+.taskList li:has(>input[type="checkbox"]:checked)>.category {
     opacity: 0.4;
 }
 
 /* common styles for all task details */
-.taskList .taskDetails{
+.taskList .taskDetails {
     margin-left: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
 
 /* Setting up different font sizes for description of task and due date */
-.taskList .taskDetails .description{
+.taskList .taskDetails .description {
     font-size: 1.2rem;
 }
 
-.taskList .taskDetails .dueDate{
+.taskList .taskDetails .dueDate {
     font-size: 0.8rem;
 }
 
 /* Category common styles */
-.taskList .category{
+.taskList .category {
     margin-left: auto;
     border-radius: 10px;
     text-align: center;
@@ -296,21 +379,26 @@ body{
 }
 
 /* Giving background color to category based on what category is choosed */
-.taskList .category.Personal{
+.taskList .category.Personal {
     background-color: var(--personal);
 }
-.taskList .category.Work{
+
+.taskList .category.Work {
     background-color: var(--work);
 }
-.taskList .category.School{
+
+.taskList .category.School {
     background-color: var(--school);
 }
-.taskList .category.Cleaning{
+
+.taskList .category.Cleaning {
     background-color: var(--cleaning);
 }
-.taskList .category.Errands{
+
+.taskList .category.Errands {
     background-color: var(--errands);
 }
-.taskList .category.Others{
+
+.taskList .category.Others {
     background-color: var(--others);
 }
