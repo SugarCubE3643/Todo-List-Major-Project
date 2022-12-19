@@ -275,6 +275,7 @@ body {
     box-shadow: 0 0px 20px var(--shadow-main);
     padding: 1rem;
     margin: 1rem;
+    min-height: 7rem;
 }
 
 /* Styling the list items */

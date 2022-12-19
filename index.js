@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Setting up static directory
 app.use(express.static('assets'));
 
+// Home page controller
 app.get('/', (req, res) => {
     
     Task.find({}, (err, tasks) => {
@@ -42,6 +43,7 @@ app.get('/', (req, res) => {
     })
 });
 
+// Create task controller
 app.post('/create-task', (req, res) => {
     Task.create({
         description: req.body.description,
@@ -50,23 +52,25 @@ app.post('/create-task', (req, res) => {
     }, (err, newTask) => {
         if(err){
             console.log(`Error in creating a new task: ${err}`);
-            return res.redirect('back');
+            return;
         }
         // Can do console.log(newTask) to log the new task
         return res.redirect('back');
     });
 });
 
+// Delete completed tasks controller
 app.post('/delete-completed-task', (req, res) => {
     Task.deleteMany({done: true}, (err) => {
         if(err){
             console.log(`Error in deleting tasks from database: ${err}`);
-            return res.redirect('back');
+            return;
         }
     });
     return res.redirect('back');
 });
 
+// Toggle task controller using the checkbox
 app.get('/toggle-task', (req, res) => {
     let id = req.query.id;
     
@@ -79,32 +83,12 @@ app.get('/toggle-task', (req, res) => {
         task.save((err, updatedTask) => {
             if(err){
                 console.log(`Error in saving updated task: ${err}`);
-                return res.redirect('back');
+                return;
             }
-            console.log(updatedTask);
-
             return res.redirect('back');
         })
     });
 });
-
-// delete task controller 
-// app.get('/delete-task', (req, res) => {
-//     let id = req.query.id;
-//     Task.findByIdAndDelete(id, (err) => {
-//         if(err){
-//             console.log(`Error deleting task from database`);
-//             return;
-//         }
-
-//         return res.redirect('back');
-//     })
-// });
-
-
-
-
-
 
 // Binds and listens for connections on the specified host and port
 app.listen(port, (err) => {
